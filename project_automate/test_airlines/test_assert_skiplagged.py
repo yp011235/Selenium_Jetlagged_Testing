@@ -6,10 +6,10 @@ from functions.base_page import BasePage
 
 class TestSkiplagged():
     
-#### TEST AIR.SKP.001, AIR.SKP.002, AIR.SKP.003, AIR.SKP.004, AIR.SKP.005, AIR.SKP.006, AIR.SKP.007
+#### TEST AIR.SKP.001, AIR.SKP.002, AIR.SKP.003, AIR.SKP.004, AIR.SKP.005, AIR.SKP.006, AIR.SKP.007, AIR.SKP.008
 #### TEST SCENARIO: Assert you can navigate to skiplagged (001), Assert departure and destination airport
 ####    can be inputted (002, 003), Assert departure and return dates can be inputted (004, 005), Select Round Trip (006),
-####    select more than 1 travelers (007)
+####    select more than 1 adult and more than 1 child travelers (007, 008)
     @pytest.mark.run(order=1) 
     def test_assert_departure_return_airports_dates(self):
         self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
@@ -24,7 +24,7 @@ class TestSkiplagged():
         skip.input_return_date('june', '1')
         skip.search_flights()
 
-    @pytest.mark.run(order=1) 
+    @pytest.mark.run(order=2) 
     def test_assert_departure_return_airports_dates_fail(self):
         self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
         driver = self.driver
