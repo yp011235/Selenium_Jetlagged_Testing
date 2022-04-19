@@ -1,9 +1,8 @@
 from selenium import webdriver
 from page_functions.skiplagged_page import Skiplagged
 import pytest
-import unittest
 
-class TestSkiplagged(unittest.TestCase):
+class TestSkiplagged():
     
 #### TEST AIR.SKP.001, AIR.SKP.002, AIR.SKP.003, AIR.SKP.004, AIR.SKP.005, AIR.SKP.006, AIR.SKP.007, AIR.SKP.008
 #### TEST SCENARIO: Assert you can navigate to skiplagged (001), Assert departure and destination airport
