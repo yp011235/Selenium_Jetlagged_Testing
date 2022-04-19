@@ -30,7 +30,7 @@ class TestSkiplagged():
         driver = self.driver
         skip = Skiplagged(driver)
         skip.navigate_to_skiplagged()
-        skip.select_round_one_way_trip('Round Trip')
+        skip.select_round_one_way_trp('Round Trip')
         skip.select_number_of_travelers('2', '2')
         skip.input_departure_airport('DTW')
         skip.input_destination_airport('MIA')
