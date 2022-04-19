@@ -2,8 +2,8 @@ class SkiplaggedLocators():
 
 ### locators for home page
     SKIPLAGGED_HOME_HEADER = '//div[@class="flight-search"]//h1'
-    SKIPLAGGED_DEPARTURE_AIRPORT_INPUT = '//input[@class="src-input ui-autocomplete-input"]'
-    SKIPLAGGED_DESTINATION_AIRPORT_INPUT = '//input[@class="dst-input ui-autocomplete-input"]'
+    SKIPLAGGED_DEPARTURE_AIRPORT_INPUT = '//input[contains(@class,"src-input")]'
+    SKIPLAGGED_DESTINATION_AIRPORT_INPUT = '//input[contains(@class,"dst-input")]'
     SKIPLAGGED_DEPART_DATE_INPUT = '//input[@placeholder="Depart"]'
     SKIPLAGGED_RETURN_DATE_INPUT = '//input[@placeholder="Return"]'
     SKIPLAGGED_SEARCH_FLIGHTS_BUTTON = '//button[@type="submit"][text()="Search Flights"]'
@@ -11,7 +11,17 @@ class SkiplaggedLocators():
 
     SKIPLAGGED_ROUND_TRIP_OR_ONE_WAY_DROP_DOWN = '//div[@class="skip-select passengers-input-container trip-type-select"]//button'
     SKIPLAGGED_ROUND_TRIP_OR_ONE_WAY_DROP_DOWN_MENU_OPTIONS= '//div[@data-trip-type][text()="%s"]'
-    SKIPLAGGED_NUMBER_OF_TRAVELERS = '//div[@class="skip-select passengers-input-container"]//button'
+
+    SKIPLAGGED_TRAVELERS_OPTION = '//div[@class="skip-select passengers-input-container"]//button'
+    SKIPLAGGED_TOTAL_NUMBER_OF_TRAVLERS = '//div[@class="skip-select passengers-input-container"]//button/span[text()="%s Travelers"]'
+    SKIPLAGGED_ADULTS_TRAVELLERS = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]/span[text()="Adults"]/..'
+    SKIPLAGGED_ADULTS_PLUS = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Adults")]/following-sibling::span/button[@data-delta="+1"]'
+    SKIPLAGGED_ADULTS_MINUS = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Adults")]/following-sibling::span/button[@data-delta="-1"]'
+    SKIPLAGGED_ADULTS_COUNT = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Adults")]/following-sibling::span/span'
+    SKIPLAGGED_CHILDREN_TRAVELLERS = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Children")]/..'
+    SKIPLAGGED_CHILDREN_PLUS = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Children")]/following-sibling::span/button[@data-delta="+1"]'
+    SKIPLAGGED_CHILDREN_MINUS = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Children")]/following-sibling::span/button[@data-delta="-1"]'
+    SKIPLAGGED_CHILDREN_COUNT = '//div[@class="skip-select passengers-input-container"]//div[@class="passengers-input__select-row"]//span[contains(text(), "Children")]/following-sibling::span/span'
 
     SKIPLAGGED_DEPART_OR_RETURN_DATE_SELECTED = '//div[@class="ui-datepicker-arrow"][@style]'
     SKIPLAGGED_CALENDAR_1_GROUP = '//div[@class="ui-datepicker-group ui-datepicker-group-first"]'

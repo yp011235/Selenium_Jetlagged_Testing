@@ -25,9 +25,39 @@ class Skiplagged(BasePage):
         self.click_element(sl.SKIPLAGGED_ROUND_TRIP_OR_ONE_WAY_DROP_DOWN_MENU_OPTIONS % choice)
         self.assert_element_is_displayed(sl.SKIPLAGGED_ROUND_TRIP_OR_ONE_WAY_DROP_DOWN + '/span[text()="%s"]' % choice)
 
-    def select_number_of_travelers(self, number):
-        self.click_element(sl.SKIPLAGGED_NUMBER_OF_TRAVELERS)
+    def select_number_of_travelers(self, adults, children=None):
+        self.assert_element_is_displayed(sl.SKIPLAGGED_TRAVELERS_OPTION)
+        self.click_element(sl.SKIPLAGGED_TRAVELERS_OPTION)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_ADULTS_TRAVELLERS)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_ADULTS_TRAVELLERS)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_CHILDREN_TRAVELLERS)
+        num_of_adults = self.get_text(sl.SKIPLAGGED_ADULTS_COUNT)
+        while int(adults) != int(num_of_adults):
+            if int(adults) > int(num_of_adults):
+                self.click_element(sl.SKIPLAGGED_ADULTS_PLUS)
+                time.sleep(0.5)
+            if int(adults) < int(num_of_adults):
+                self.click_element(sl.SKIPLAGGED_ADULTS_MINUS)
+                time.sleep(0.5)
+            num_of_adults = self.get_text(sl.SKIPLAGGED_ADULTS_COUNT)
 
+        if children != None:
+            num_of_children = self.get_text(sl.SKIPLAGGED_CHILDREN_COUNT)
+            while int(children) != int(num_of_children):
+                if int(children) > int(num_of_children):
+                    self.click_element(sl.SKIPLAGGED_CHILDREN_PLUS)
+                    time.sleep(0.5)
+                if int(children) < int(num_of_children):
+                    self.click_element(sl.SKIPLAGGED_CHILDREN_MINUS)
+                    time.sleep(0.5)
+                num_of_children = self.get_text(sl.SKIPLAGGED_CHILDREN_COUNT)
+
+        if children == None:
+            children = 0
+
+        self.click_element(sl.SKIPLAGGED_TRAVELERS_OPTION)
+        total_travelers = int(adults) + int(children)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_TOTAL_NUMBER_OF_TRAVLERS % total_travelers)
 
     def input_departure_airport(self, airport):
         self.send_text_enter(sl.SKIPLAGGED_DEPARTURE_AIRPORT_INPUT, airport)
