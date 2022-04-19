@@ -1,5 +1,5 @@
 from functions.base_page import BasePage
-from locaters.delta_locators import DeltaLocators as dl
+from locators.delta_locators import DeltaLocators as dl
 
 class Delta(BasePage):
 

@@ -161,3 +161,7 @@ cython_debug/
 
 .DS_Store
 .vscode/
+
+.locators/practice_amazon_locators.py
+.page_functions/practice_amazon_search_page.py
+.practice_test_projects/

@@ -1,4 +1,4 @@
-from locaters.practice_amazon_locators import AmazonLocators as al
+from locators.practice_amazon_locators import AmazonLocators as al
 from functions.base_page import BasePage as base
 # we would use the above if we 
 from selenium import webdriver

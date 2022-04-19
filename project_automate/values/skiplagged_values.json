@@ -1,0 +1,66 @@
+{
+  "DTW to ATL": {
+    "flight 1": "e38d070|{\"cost\":6427,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"ee9c8a1\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":12418,\"source\":[{\"cost\":6427,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,6427],\"Gotogate\":[1650239281,6797],\"Kiwi\":[1650239281,7300],\"Mytrip\":[1650239281,7420],\"Priceline\":[1650239280,7063]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":6427,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,6427],\"Gotogate\":[1650239281,6797],\"Kiwi\":[1650239281,7300],\"Mytrip\":[1650239281,7420],\"Priceline\":[1650239280,7063]}}],\"to\":\"ATL\"}",
+    "flight 2": "bb8c6a8|{\"cost\":6427,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"1111754\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":12418,\"source\":[{\"cost\":6427,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,6427],\"Gotogate\":[1650239281,6797],\"Kiwi\":[1650239281,7300],\"Mytrip\":[1650239281,7420],\"Priceline\":[1650239280,7063]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":6427,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,6427],\"Gotogate\":[1650239281,6797],\"Kiwi\":[1650239281,7300],\"Mytrip\":[1650239281,7420],\"Priceline\":[1650239280,7063]}}],\"to\":\"ATL\"}",
+    "flight 3": "29eac2c|{\"cost\":6427,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"ce9d026\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":12418,\"source\":[{\"cost\":6427,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,6427],\"Gotogate\":[1650239281,6797],\"Kiwi\":[1650239281,7000],\"Mytrip\":[1650239281,7420],\"Priceline\":[1650239280,7063]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":6427,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,6427],\"Gotogate\":[1650239281,6797],\"Kiwi\":[1650239281,7000],\"Mytrip\":[1650239281,7420],\"Priceline\":[1650239280,7063]}}],\"to\":\"ATL\"}",
+    "flight 4": "e5d25f4|{\"cost\":6500,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"bcb7dc1\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":12491,\"source\":[{\"cost\":6500,\"source\":{\"FAST\":[1650239621,6500],\"Kiwi\":[1650239281,7000],\"Priceline\":[1650239280,7000]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":6500,\"source\":{\"FAST\":[1650239621,6500],\"Kiwi\":[1650239281,7000],\"Priceline\":[1650239280,7000]}}],\"to\":\"ATL\"}",
+    "flight 5": "007c3ce|{\"cost\":8081,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"74ea5d6\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":14072,\"source\":[{\"cost\":8081,\"source\":{\"FlightNetwork\":[1650239281,8081],\"Gotogate\":[1650239281,8083]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":8081,\"source\":{\"FlightNetwork\":[1650239281,8081],\"Gotogate\":[1650239281,8083]}}],\"to\":\"ATL\"}",
+    "flight 6": "8c8082b|{\"cost\":8817,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"e75e7e9\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":14808,\"source\":[{\"cost\":8817,\"source\":{\"FAST\":[1650239621,9000],\"FlightNetwork\":[1650239281,8817],\"Gotogate\":[1650239281,9216],\"Kiwi\":[1650239281,9800],\"Mytrip\":[1650239281,9652]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":8817,\"source\":{\"FAST\":[1650239621,9000],\"FlightNetwork\":[1650239281,8817],\"Gotogate\":[1650239281,9216],\"Kiwi\":[1650239281,9800],\"Mytrip\":[1650239281,9652]}}],\"to\":\"ATL\"}",
+    "flight 7": "da45a79|{\"cost\":9413,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"1c730f6\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":15404,\"source\":[{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}}],\"to\":\"ATL\"}",
+    "flight 8": "466d029|{\"cost\":9413,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"0d20b5a\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":15404,\"source\":[{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}}],\"to\":\"ATL\"}",
+    "flight 9": "0bf0e37|{\"cost\":9413,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"d95deaa\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":15404,\"source\":[{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}}],\"to\":\"ATL\"}",
+    "flight 10": "4e85892|{\"cost\":9413,\"counts\":{\"adults\":1,\"children\":0,\"infants_lap\":0,\"infants_seat\":0},\"depart\":\"2022-05-22\",\"fare_class\":\"economy\",\"from\":\"DTW\",\"key\":\"324daf4\",\"return\":\"2022-06-01\",\"sort\":\"cost\",\"source\":[{\"cost\":15404,\"source\":[{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}},{\"cost\":5991,\"source\":{\"FAST\":[1650239621,6600],\"FlightNetwork\":[1650239281,5991],\"Gotogate\":[1650239281,6129],\"Kiwi\":[1650239280,7300],\"Mytrip\":[1650239280,6266],\"Priceline\":[1650239281,7063]}}]},{\"cost\":9413,\"source\":{\"FlightNetwork\":[1650239281,9413],\"Gotogate\":[1650239281,9414]}}],\"to\":\"ATL\"}"
+  },
+  "DTW to TPA": {
+    "flight 1": {
+      "price": "$155",
+      "duration": "3h",
+      "number of stops": "non stop"
+    },
+    "flight 2": {
+      "price": "$207",
+      "duration": "3h",
+      "number of stops": "non stop"
+    },
+    "flight 3": {
+      "price": "$214",
+      "duration": "7h",
+      "number of stops": "1 stop"
+    },
+    "flight 4": {
+      "price": "$267",
+      "duration": "3h",
+      "number of stops": "non stop"
+    },
+    "flight 5": {
+      "price": "$267",
+      "duration": "3h",
+      "number of stops": "non stop"
+    },
+    "flight 6": {
+      "price": "$281",
+      "duration": "4h",
+      "number of stops": "1 stop"
+    },
+    "flight 7": {
+      "price": "$287",
+      "duration": "3h",
+      "number of stops": "non stop"
+    },
+    "flight 8": {
+      "price": "$295",
+      "duration": "5h",
+      "number of stops": "1 stop"
+    },
+    "flight 9": {
+      "price": "$295",
+      "duration": "15h",
+      "number of stops": "1 stop"
+    },
+    "flight 10": {
+      "price": "$433",
+      "duration": "11h",
+      "number of stops": "1 stop"
+    }
+  }
+}
