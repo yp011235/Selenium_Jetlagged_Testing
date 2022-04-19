@@ -16,7 +16,7 @@ class TestSkiplagged():
         driver = self.driver
         skip = Skiplagged(driver)
         skip.navigate_to_skiplagged()
-        skip.select_round_one_way_trip('Round Trip')
+#        skip.select_round_one_way_trip('Round Trip')
         skip.input_departure_airport('DTW')
         skip.input_destination_airport('MIA')
         skip.input_departure_date('MAY', '22')
