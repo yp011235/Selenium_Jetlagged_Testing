@@ -164,4 +164,4 @@ cython_debug/
 
 .project_automate/locators/practice_amazon_locators.py
 .project_automate/page_functions/practice_amazon_search_page.py
-.project_automate/practice_test_projects/
+.project_automate/practice_test_projects
