@@ -1,0 +1,18 @@
+The purpose of these files are to show some of the methods I have used for past employers.
+
+The test's objective is to go to airline websites, assert elements appear as expected and that
+workflows execute as intended.
+
+Of course, there are issues where big corporations include certain protections that make automating
+a little difficult, primarily when they ask if I am a robot in the middle of the test.
+
+These files, test scenarios, syntax of locators and functions, etc., do not represent a rigid way of thinking
+or working. The opposite, because I had to how to set up the test enviornment (unittest vs pytest), classes, inheriting
+functions between different folders and classes, and a lot of debbuging and searching online for answers.
+
+I am well experience in automation testing, but that does not mean I am not flexible in learning
+or in my methodolgy in working. I come with experience and plenty of room to learn how different
+organizations work, create, and communicate, so I can avoid being a stagnat asset thats only good
+at what I am hired for and resistant against change. Instead I aim to be a growing asset, one that
+learns the ropes of team, isn't scared to learn new technologies (Eggplant, Cucumber, etc), and am
+more than willing to pick up roles outside of my job description to help the team when help is needed.
