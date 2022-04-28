@@ -12,13 +12,11 @@ import urllib.request
 from PIL import Image
 
 
+#### This page contains all the basic, builder functions that are resuable throughout
+#### more than one webpage
 
-# This will the the parent class for all the pages in our application
-# the most common elements and functions will be stored here
 class BasePage():
     
-# this function is called every time a new object in this class is created
-# the self variable is used to represent the instance of the class
     def __init__(self, driver):
         self.driver = driver
 

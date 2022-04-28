@@ -41,8 +41,12 @@ class SkiplaggedLocators():
     SKIPLAGGED_CALENDAR_HIDDEN = '//div[@id="ui-datepicker-div"][contains(@style, "display: none")]'
     SKIPLAGGED_CALENDAR_NEXT_BUTTON = '//span[@class="ui-icon ui-icon-circle-triangle-e"][text()="Next"]'
 
+    SKIPLAGGED_FEATURED_IN = '//div[@class="press-banner hide-small"]'
+    SKIPLAGGED_REWARDS_AD = '//a[@href="/rewards/summary"][@class="affiliate-banner"]'
+
     SKIPLAGGED_HOME_PAGE_DEALS_HEADER_1 = '//div[@class="skip-deals"]/h1[text()="Find flights the airlines don’t want you to see."]'
     SKIPLAGGED_HOME_PAGE_DEALS_HEADER_2 = '//div[@class="skip-deals"]/h1//span'
+    SKIPLAGGED_HOME_PAGE_DEALS_HEADER_3 = '//div[text()="Take a look"]'
     SKIPLAGGED_DEALS_CARDS = '//li[@class="deal"]'
     SKIPLAGGED_DEALS_LOCATION_INPUT = '//form[@class="explore-deals hide-small"]//input[@placeholder="Enter Location"]'
     SKIPLAGGED_DEALS_LOCATION_AUTOCOMPLETE = '//li[@class="ui-menu-item"]//span[@class="autocomplete-em"]'

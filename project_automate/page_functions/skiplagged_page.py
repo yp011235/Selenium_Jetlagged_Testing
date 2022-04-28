@@ -8,6 +8,9 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+#### This page is filled with functions that are meant for Skiplagged.com
+#### and use functions from BasePage
+
 class Skiplagged(BasePage):
 
     def __init__(self, driver):
@@ -135,6 +138,7 @@ class Skiplagged(BasePage):
     def assert_header_preceding_deals_homepage(self):
         self.assert_element_is_displayed(sl.SKIPLAGGED_HOME_PAGE_DEALS_HEADER_1)
         self.assert_element_is_displayed(sl.SKIPLAGGED_HOME_PAGE_DEALS_HEADER_2)
+        self.assert_element_is_displayed()
 
     # assert there's 12 deals and they're all Skiplagged Rates
     def assert_deals_on_homepage(self):
@@ -258,3 +262,29 @@ class Skiplagged(BasePage):
         self.wait_until_element_is_present('//h1[@class="article-title speakable"]')
         self.assert_element_is_displayed('//h1[@class="article-title speakable"]')
         self.close_current_tab()
+
+    def assert_featured_in_link(self):
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FEATURED_IN)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FEATURED_IN + self.span_with_text('Featured in:'))
+        self.click_element(sl.SKIPLAGGED_FEATURED_IN)
+        self.wait_until_element_is_present(self.link_with_text('Download our Press Kit'))
+        self.assert_element_is_displayed(self.link_with_text('Download our Press Kit'))
+
+    def assert_rewards_ad_link(self):
+        self.click_element(sl.SKIPLAGGED_REWARDS_AD)
+        time.sleep(1)
+        self.switch_to_newest_tab()
+        self.wait_until_element_is_present(self.div_with_text('Rewards Program'))
+        self.assert_element_is_displayed(self.div_with_text('Rewards Program'))
+        self.close_current_tab()
+
+    def assert_faq_link(self):
+        self.click_element(self.link_with_text('Read the full FAQ'))
+        self.wait_until_element_is_present(self.link_with_text('FAQ'))
+        self.assert_element_is_displayed(self.link_with_text('FAQ'))
+
+    def assert_mobile_app_link(self):
+        self.click_element(self.link_with_text('mobile app'))
+        self.wait_until_element_is_present(self.header_with_text('4', 'Download the app'))
+        self.assert_element_is_displayed(self.header_with_text('4', 'Download the app'))
+        self.click_element('//button[@data-dismiss="modal"]')
