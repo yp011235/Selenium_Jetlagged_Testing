@@ -1,6 +1,14 @@
 class SkiplaggedLocators():
 
 ### locators for home page
+    # top row links
+    SKIPLAGGED_TR_SKIPLAGGED_LINK = '//div[@class="header-left"]//span[@class="hide-small"]'
+    SKIPLAGGED_TR_FLIGHTS_LINK = '//div[@class="header-left"]//a[@href="/flights"]'
+    SKIPLAGGED_TR_HOTELS_LINK = '//div[@class="header-left"]//a[@href="/hotels"]'
+    SKIPLAGGED_TR_CARS_LINK = '//div[@class="header-left"]//a[text()="Cars"]'
+    SKIPLAGGED_TR_REWARDS_LINK = '//div[@class="header-left"]//a[text()="Rewards"]'
+    SKIPLAGGED_TR_LOGIN_LINK = '//a[text()="Login"]'
+
     SKIPLAGGED_HOME_HEADER = '//div[@class="flight-search"]//h1'
     SKIPLAGGED_DEPARTURE_AIRPORT_INPUT = '//input[contains(@class,"src-input")]'
     SKIPLAGGED_DESTINATION_AIRPORT_INPUT = '//input[contains(@class,"dst-input")]'
@@ -32,6 +40,14 @@ class SkiplaggedLocators():
     SKIPLAGGED_CALENDAR_2_DATES = '//div[@class="ui-datepicker-group ui-datepicker-group-last"]//a[@class="ui-state-default"][text()="%s"]'
     SKIPLAGGED_CALENDAR_HIDDEN = '//div[@id="ui-datepicker-div"][contains(@style, "display: none")]'
     SKIPLAGGED_CALENDAR_NEXT_BUTTON = '//span[@class="ui-icon ui-icon-circle-triangle-e"][text()="Next"]'
+
+    SKIPLAGGED_HOME_PAGE_DEALS_HEADER_1 = '//div[@class="skip-deals"]/h1[text()="Find flights the airlines don’t want you to see."]'
+    SKIPLAGGED_HOME_PAGE_DEALS_HEADER_2 = '//div[@class="skip-deals"]/h1//span'
+    SKIPLAGGED_DEALS_CARDS = '//li[@class="deal"]'
+    SKIPLAGGED_DEALS_LOCATION_INPUT = '//form[@class="explore-deals hide-small"]//input[@placeholder="Enter Location"]'
+    SKIPLAGGED_DEALS_LOCATION_AUTOCOMPLETE = '//li[@class="ui-menu-item"]//span[@class="autocomplete-em"]'
+    SKIPLAGGED_DEALS_LOCATION_TEXT = '(//li[@class="ui-menu-item"]/a)[1]'
+    SKIPLAGGED_SEARCH_DEALS_BUTTON = '//form[@class="explore-deals hide-small"]//button[@type="submit"]'
 
 ### locators for cheapest city flights when destination is Anywhere
     SKIPLAGGED_CHEAPEST_CITIES_CARD = '//div[@id="trip-list-skipsy"]//li'

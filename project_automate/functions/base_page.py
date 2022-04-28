@@ -1,4 +1,3 @@
-
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -32,7 +31,6 @@ class BasePage():
 
     def wait_until_element_is_present(self, element_xpath):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, element_xpath)))
-
 
     def highlight_element(self, xpath):
         element = self.driver.find_element(By.XPATH, xpath)
@@ -117,6 +115,26 @@ class BasePage():
                         element = rows_xpath + '//span[text()="%s"]' % match_value
                     self.assert_element_is_displayed(element)
                     break
+    
+    def span_with_text(self, text):
+        xpath = '//span[text()="%s"]' % text
+        return xpath
+
+    def div_with_text(self, text):
+        xpath = '//div[text()="%s"]' % text
+        return xpath
+
+    def label_with_text(self, text):
+        xpath = '//label[text()="%s"]' % text
+        return xpath
+
+    def link_with_text(self, text):
+        xpath = '//a[text()="%s"]' % text
+        return xpath
+
+    def header_with_text(self, header_number, text):
+        xpath = '//h%s[text()="%s"]' % (header_number, text)
+        return xpath
 
     def find_element_by_xpath(self, xpath):
         element = self.driver.find_element(By.XPATH, xpath)
@@ -125,121 +143,11 @@ class BasePage():
     def find_elements_by_xpath(self, xpath):
         elements = self.driver.find_elements(By.XPATH, xpath)
         return elements
-    
-
-################################################################
-################################################################
-################    JSON CODE   ################################
-################                ################################
-
-    def write_to_json(self, products):
-        try:
-            with open(os.getcwd() + '//values3.json', 'w') as json_file:
-                # assume products are json objects
-                json_file.write(json.dumps(products, indent=2))
-        except FileNotFoundError as e:
-            pass
-
-    def get_from_json(self, directory):
-        with open(os.getcwd() + '//%s.json' % directory) as json_file:
-            data = json.load(json_file)
-        return data
-
-    def empty_json(self, directory):
-        open(os.getcwd() + '//%s.json' % directory, 'w').close()
-
-
-    # def write_to_json_directory(self, json_values, directory=None):
-    #     if directory == None:
-    #         try:
-    #             with open(os.getcwd() + '//values.json', 'w') as json_file:
-    #                 # assume products are json objects
-    #                 json_file.write(json.dumps(json_values, indent=2))
-    #         except FileNotFoundError as e:
-    #             pass
-    #     else:
-    #         try:
-    #             with open(os.getcwd() + '//%s.json' % directory, 'w') as json_file:
-    #                 # assume products are json objects
-    #                 json_file.write(json.dumps(json_values, indent=2))
-    #         except FileNotFoundError as e:
-    #             pass
-
-    # def append_to_json_directory(self, json_values, directory=None):
-    #     if directory == None:
-    #         try:
-    #             with open(os.getcwd() + '//values.json', 'a') as json_file:
-    #                 # assume products are json objects
-    #                 json_file.write(json.dumps(json_values, indent=2))
-    #         except FileNotFoundError as e:
-    #             pass
-    #     else:
-    #         try:
-    #             with open(os.getcwd() + '//%s.json' % directory, 'a') as json_file:
-    #                 # assume products are json objects
-    #                 json_file.write(json.dumps(json_values, indent=2))
-    #         except FileNotFoundError as e:
-    #             pass
-
-    def write_to_json(self, json_keys, json_value, directory=None):
-        with open(os.getcwd() + '//project_automate//values%s.json' % directory) as json_file:
-            data = json_file.read()
-        d = json.loads(data)
-        d['%s' % json_keys[0]] = json_value
-        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'w') as json_file:
-            json_file.seek(0)
-            json_file.write(json.dumps(d, indent=2))
-            json_file.truncate()
-
-    def write_to_json2(self, json_key, json_value, directory): ### more like update a current key in the json
-        file_location = os.getcwd() + '//project_automate//values%s.json' % directory
-        with open(file_location, 'r+') as json_file:
-            data = json.load(json_file)
-            data["%s" % json_key] = "%s" % json_value
-            json_file.seek(0)
-            json.dump(data, json_file)
-            json_file.truncate()
-
-    def append_to_json(self, json_key, json_value, directory): ### add to the bottom of a json dictionary
-        file_location = os.getcwd() + '//project_automate//values%s.json' % directory
-        with open(file_location, 'a+') as json_file:
-            data = json.load(json_file)
-            data["%s" % json_key].append(json_value)
-        # with open(file_location, 'w') as json_file:
-            json_file.seek(0)
-            json.dump(data, json_file, indent=2)
-
-
-    def append_to_json_directory(self, json_values, directory):
-        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'a') as json_file:
-            # assume products are json objects
-            json_file.write(json.dumps(json_values, indent=2))
-            json_file.write(',\n')
-
-    def append_to_json_directory2(self, json_key, json_values, directory):
-        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'a') as json_file:
-            file_data = json.load(json_file)
-            file_data[json_key].append(json_values[2])
-            # json_file.write(json.dumps(json_values[2], indent=2))
-            json.dump(file_data, json_file, indent = 2)
-            json_file.write(',\n')
-
-    def append_to_json_dictionary(self, json_values, directory):
-        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'r+') as json_file:
-            dictionary = json.load(json_file)
-            dictionary.update(json_values)
-            json.dump(dictionary, json_file, indent=2)
-            json_file.write(',\n')
 
     def empty_folder(folder_name):
         dir = os.getcwd() + '/%s' % folder_name
         for file in os.scandir(dir):
             os.remove(file.path)
-
-    # def empty_desktop_folder(folder_name):
-    #     dir = '/%s' % folder_name
-    #     for file in os.scandir(dir):
-    #         os.remove(file.path)1
 
     def empty_desktop_folder(path):
         nested_paths = glob.glob(path)
@@ -248,11 +156,6 @@ class BasePage():
                 shutil.rmtree(nested_path)
             else:
                 os.remove(nested_path)
-        # dirs = glob.glob(path)
-        # for dir in dirs:
-        #     for file in glob.glob(dir):
-        #         os.remove(file)
-        #     os.rmdir(dir)
 
     def get_image(self, xpath, save_path):
         self.highlight_element(xpath)
@@ -263,7 +166,6 @@ class BasePage():
 
     def get_image_to_desktop_folder(self, xpath, path, file_name):
         self.highlight_element(xpath)
-        # path = os.path.join('/Users/yeti/Desktop/', folder_name)
 
         img_url = self.driver.find_element(By.XPATH, xpath).get_attribute('src')
         urllib.request.urlretrieve(img_url, "//%s//%s.jpg" % (path, file_name))
@@ -273,14 +175,6 @@ class BasePage():
         return element_attribute
 
     def add_new_dictionary(self, dictionary, directory):
-        # file_location = os.getcwd() + '//project_automate//values%s.json' % directory
-        # with open(file_location, 'r+') as json_file:
-        #     data = json.load(json_file)
-        #     new_dictionary = {
-        #         "%s" % dictionary: []
-        #     }
-        #     data.update(new_dictionary)
-        #     json_file.write(json.dumps(data, indent=2))
         with open(os.getcwd() + '//project_automate//values%s.json' % directory) as json_file:
             data = json_file.read()
         d = json.loads(data)
@@ -292,15 +186,6 @@ class BasePage():
             json_file.seek(0)
             json_file.write(json.dumps(d, indent=2))
             json_file.truncate()
-
-    def add_to_dictionary(self, json_key, json_value, directory): ### add to the bottom of a json dictionary
-        file_location = os.getcwd() + '//project_automate//values%s.json' % directory
-        with open(file_location, 'r+') as json_file:
-            data = json.load(json_file)
-            data["%s" % json_key].append(json_value)
-        # with open(file_location, 'w') as json_file:
-            json_file.seek(0)
-            json.dump(data, json_file, indent=2)
 
     def write_to_dictionary(self, json_key, json_value, directory): ### add to the bottom of a json dictionary
         file_location = os.getcwd() + '//project_automate//values%s.json' % directory
@@ -318,7 +203,6 @@ class BasePage():
         with open(os.getcwd() + '//project_automate//values%s.json' % directory, "w") as json_file:
             json.dump({}, json_file, indent=4, sort_keys=True)
 
-
     def get_from_json(self, json_key1, json_key2, json_key3, directory):
         file_location = os.getcwd() + '//project_automate//values%s.json' % directory
         with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'r') as json_file:
@@ -327,3 +211,14 @@ class BasePage():
         json_value = d["%s" % json_key1]["%s" % json_key2]["%s" % json_key3]
         print(json_value)
         return json_value
+
+    def switch_to_newest_tab(self):
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+
+    def close_current_tab(self):
+        self.driver.close()
+        time.sleep(0.5)
+        try:
+            self.switch_to_newest_tab()
+        except Exception:
+            pass
