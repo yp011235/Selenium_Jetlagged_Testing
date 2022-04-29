@@ -10,11 +10,11 @@ import unittest
 #       creating classes so i could inherit functions and driver from other files in different folders
 #       writing to json in an organized way, so it would just append onto the dictionary but replace the whole thing
 #               or to change just one value in a dictionary
-#       
 
 
-### we're not using any unittest functions, we're simply using the pytest configuration to run our tests
-### we're using unittest to set up our test class and emptying our json file
+#### PURPOSE: Collect flight information from a table-like database and writing it to json in an organized manner
+
+#### we're using unittest to set up our test class and emptying our json file
 class TestSkiplagged(unittest.TestCase):
 
     def setUpClass():

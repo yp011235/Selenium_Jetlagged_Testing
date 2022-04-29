@@ -138,7 +138,7 @@ class Skiplagged(BasePage):
     def assert_header_preceding_deals_homepage(self):
         self.assert_element_is_displayed(sl.SKIPLAGGED_HOME_PAGE_DEALS_HEADER_1)
         self.assert_element_is_displayed(sl.SKIPLAGGED_HOME_PAGE_DEALS_HEADER_2)
-        self.assert_element_is_displayed()
+        self.assert_element_is_displayed(sl.SKIPLAGGED_HOME_PAGE_DEALS_HEADER_3)
 
     # assert there's 12 deals and they're all Skiplagged Rates
     def assert_deals_on_homepage(self):
@@ -288,3 +288,90 @@ class Skiplagged(BasePage):
         self.wait_until_element_is_present(self.header_with_text('4', 'Download the app'))
         self.assert_element_is_displayed(self.header_with_text('4', 'Download the app'))
         self.click_element('//button[@data-dismiss="modal"]')
+
+    def assert_footer_elements(self):
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_LOGO)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_ABOUT)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_FAQ)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_PRESS)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_TERMS)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_CAREERS)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_LANGUAGE)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_CURRENCY)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_FACEBOOK)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_TWITTER)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_INSTAGRAM)
+
+    def assert_footer_language_select(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_LANGUAGE)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN)
+        langauge = self.get_text(sl.SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN+'//li[3]//span')
+        self.click_element(sl.SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN+'//li[3]//span')
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_LANGUAGE+self.span_with_text(langauge))
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_LANGUAGE+self.span_with_text(langauge))
+        self.click_element(sl.SKIPLAGGED_FOOTER_LANGUAGE)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN+self.span_with_text('English'))
+        self.click_element(sl.SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN+self.span_with_text('English'))
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_LANGUAGE+self.span_with_text('English'))
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_LANGUAGE+self.span_with_text('English'))
+
+    def assert_footer_currency_select(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_CURRENCY)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN)
+        currency = self.get_text(sl.SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN+'//li[3]//span')
+        self.click_element(sl.SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN+'//li[3]//span')
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_CURRENCY+self.span_with_text(currency))
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_CURRENCY+self.span_with_text(currency))
+        self.click_element(sl.SKIPLAGGED_FOOTER_CURRENCY)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN+self.span_with_text('USD'))
+        self.click_element(sl.SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN+self.span_with_text('USD'))
+        self.wait_until_element_is_present(sl.SKIPLAGGED_FOOTER_CURRENCY+self.span_with_text('USD'))
+        self.assert_element_is_displayed(sl.SKIPLAGGED_FOOTER_CURRENCY+self.span_with_text('USD'))
+
+    def assert_about_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_ABOUT)
+        self.wait_until_element_is_present(self.header_with_text('2', 'How are we doing this?'))
+        self.assert_element_is_displayed(self.header_with_text('2', 'How are we doing this?'))
+
+    def assert_faq_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_FAQ)
+        self.wait_until_element_is_present(self.link_with_text('FAQ'))
+        self.assert_element_is_displayed(self.link_with_text('FAQ'))
+
+    def assert_press_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_PRESS)
+        self.wait_until_element_is_present(self.link_with_text('Download our Press Kit'))
+        self.assert_element_is_displayed(self.link_with_text('Download our Press Kit'))
+
+    def assert_terms_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_TERMS)
+        self.wait_until_element_is_present(self.header_with_text('1', 'Terms and Conditions'))
+        self.assert_element_is_displayed(self.header_with_text('1', 'Terms and Conditions'))
+
+    def assert_careers_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_CAREERS)
+        self.wait_until_element_is_present(self.font_with_text('Careers at Skiplagged'))
+        self.assert_element_is_displayed(self.font_with_text('Careers at Skiplagged'))
+
+    def assert_facebook_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_FACEBOOK)
+        self.switch_to_newest_tab()
+        self.wait_until_element_is_present(self.header_with_text('1', 'Skiplagged'))
+        self.assert_element_is_displayed(self.header_with_text('1', 'Skiplagged'))
+        self.close_current_tab()
+
+    def assert_twitter_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_TWITTER)
+        self.switch_to_newest_tab()
+        self.wait_until_element_is_present(self.span_with_text('Skiplagged'))
+        self.assert_element_is_displayed(self.span_with_text('Skiplagged'))
+        self.close_current_tab()
+
+    def assert_instagram_link(self):
+        self.click_element(sl.SKIPLAGGED_FOOTER_INSTAGRAM)
+        self.switch_to_newest_tab()
+        self.wait_until_element_is_present(self.header_with_text('2', 'skiplagged'))
+        self.assert_element_is_displayed(self.header_with_text('2', 'skiplagged'))
+        self.close_current_tab()

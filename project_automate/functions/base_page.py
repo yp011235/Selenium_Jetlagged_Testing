@@ -130,6 +130,10 @@ class BasePage():
         xpath = '//a[text()="%s"]' % text
         return xpath
 
+    def font_with_text(self, text):
+        xpath = '//font[text()="%s"]' % text
+        return xpath
+
     def header_with_text(self, header_number, text):
         xpath = '//h%s[text()="%s"]' % (header_number, text)
         return xpath
@@ -211,6 +215,7 @@ class BasePage():
         return json_value
 
     def switch_to_newest_tab(self):
+        time.sleep(0.5)
         self.driver.switch_to.window(self.driver.window_handles[-1])
 
     def close_current_tab(self):

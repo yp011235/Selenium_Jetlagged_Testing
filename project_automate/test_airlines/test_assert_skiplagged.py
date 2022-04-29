@@ -98,3 +98,29 @@ class TestSkiplagged(unittest.TestCase):
 
 #### TEST ID: AIR.SKP.024
 #### TEST DESCRIPTION: Assert Links on the footer of home page,
+    def test_assert_home_page_footer(self):
+        self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
+        driver = self.driver
+        skip = Skiplagged(driver)
+        skip.navigate_to_skiplagged()
+        skip.assert_footer_elements()
+        skip.assert_about_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_faq_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_press_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_terms_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_careers_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_footer_language_select()
+        skip.navigate_to_skiplagged()
+        skip.assert_footer_currency_select()
+        skip.navigate_to_skiplagged()
+        skip.assert_facebook_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_twitter_link()
+        skip.navigate_to_skiplagged()
+        skip.assert_instagram_link()
+        skip.navigate_to_skiplagged()

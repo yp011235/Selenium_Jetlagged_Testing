@@ -4,7 +4,7 @@ The test's objective is to go to airline websites, assert elements appear as exp
 workflows execute as intended.
 
 Of course, there are issues where big corporations include certain protections that make automating
-a little difficult, primarily when they ask if I am a robot in the middle of the test.
+a little difficult, primarily when they ask if I am a robot in the middle of a test.
 
 These files, test scenarios, syntax of locators and functions, etc., do not represent a rigid way of thinking
 or working. The opposite, because I had to how to set up the test enviornment (unittest vs pytest), classes, inheriting

@@ -53,6 +53,21 @@ class SkiplaggedLocators():
     SKIPLAGGED_DEALS_LOCATION_TEXT = '(//li[@class="ui-menu-item"]/a)[1]'
     SKIPLAGGED_SEARCH_DEALS_BUTTON = '//form[@class="explore-deals hide-small"]//button[@type="submit"]'
 
+    # footer locaters
+    SKIPLAGGED_FOOTER_LOGO = '//div[@class="footer-logo"][text()="skiplagged"]'
+    SKIPLAGGED_FOOTER_ABOUT = '//div[@class="footer-nav"]//a[@title="About"][text()="About"]'
+    SKIPLAGGED_FOOTER_FAQ = '//div[@class="footer-nav"]//a[@title="FAQ"][text()="FAQ"]'
+    SKIPLAGGED_FOOTER_PRESS = '//div[@class="footer-nav"]//a[@title="Press"][text()="Press"]'
+    SKIPLAGGED_FOOTER_TERMS = '//div[@class="footer-nav"]//a[@title="Terms"][text()="Terms"]'
+    SKIPLAGGED_FOOTER_CAREERS = '//div[@class="footer-nav"]//a[@title="Careers"][text()="Careers"]'
+    SKIPLAGGED_FOOTER_LANGUAGE = '//div[@class="language-select"]//a[@class="dropdown-toggle"]'
+    SKIPLAGGED_FOOTER_LANGUAGE_DROPDOWN = '//div[@class="language-select"]//ul[@class="dropdown-menu dropdown-menu-right"]'
+    SKIPLAGGED_FOOTER_CURRENCY = '//div[@class="footer__dropdown-group"]//div[@class="currency-select"]//a[@class="dropdown-toggle"]'
+    SKIPLAGGED_FOOTER_CURRENCY_DROPDOWN = '//div[@class="footer__dropdown-group"]//div[@class="currency-select"]//ul[@class="dropdown-menu dropdown-menu-right"]'
+    SKIPLAGGED_FOOTER_FACEBOOK = '//div[@class="social-media-links"]//a[@data-alt="Facebook"]'
+    SKIPLAGGED_FOOTER_TWITTER = '//div[@class="social-media-links"]//a[@data-alt="Twitter"]'
+    SKIPLAGGED_FOOTER_INSTAGRAM = '//div[@class="social-media-links"]//a[@data-alt="Instagram"]'
+
 ### locators for cheapest city flights when destination is Anywhere
     SKIPLAGGED_CHEAPEST_CITIES_CARD = '//div[@id="trip-list-skipsy"]//li'
     SKIPLAGGED_INDEX_CHEAPEST_CITIES_CARD_INDEX = '(//div[@id="trip-list-skipsy"]//li)[%s]'
