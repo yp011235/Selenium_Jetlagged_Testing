@@ -50,5 +50,37 @@
       "duration": "9h",
       "number of stops": "2 stops"
     }
+  },
+  "DTW to MIA": {
+    "price": "$800",
+    "duration": "3h",
+    "number of stops": "non stop",
+    "departure airport": "DTW",
+    "departure city": "Detroit",
+    "departure takeoff time": "8:46PM",
+    "departure flight duration": " 3h 13m"
+  },
+  "HNL to AMS": {
+    "price": "$9,905",
+    "duration": "25h",
+    "number of stops": "1 stop",
+    "departure airport": "HNL",
+    "departure city": "Honolulu",
+    "departure takeoff time": "9:15PM",
+    "departure flight duration": " 5h 3m",
+    "layover 1 arrival": "5:18AM",
+    "layover 1 airport": "SFO",
+    "layover 1 city": "San Francisco",
+    "layover 1 duration": " 9h 27m",
+    "layover 1 departure takeoff": "2:45PM",
+    "destination arrival": "10:20AM",
+    "destination airport": "AMS",
+    "destination city": "Amsterdam",
+    "skipped layover duration": " 1h 10m",
+    "skipped layover takeoff": "11:30AM",
+    "skipped layover flight duration": " 3h 20m",
+    "skipped arrival": "3:50PM",
+    "skipped arrival airport": "IST",
+    "skipped arrival city": "Istanbul"
   }
 }

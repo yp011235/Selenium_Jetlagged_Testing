@@ -2,49 +2,55 @@ from selenium import webdriver
 from page_functions.skiplagged_page import Skiplagged
 import pytest
 import unittest
-from functions.base_page import BasePage
+from functions.base_page import BasePage 
 
 #### The tests below are to assert the different elements on the website Skiplagged.com
 #### Currently there is no full end to end test
 #### Each test has comments above it with test scenario ID and an explanation of what 
 ####     the script aims to test
 
-class TestSkiplagged(unittest.TestCase):
+# class TestSkiplagged(unittest.TestCase):
+class TestSkiplagged():
     
-    def tearDown(self):
-        driver = webdriver.Chrome
-        self.driver.quit()
+    # def tearDown(self):
+    #     driver = webdriver.Chrome
+    #     self.driver.quit()
 
 #### TEST ID: AIR.SKP.001, AIR.SKP.002, AIR.SKP.003, AIR.SKP.004, AIR.SKP.005, AIR.SKP.006, AIR.SKP.007, AIR.SKP.008
 #### TEST DESCRIPTION: Assert you can navigate to skiplagged (001), Assert departure and destination airport
 ####    can be inputted (002, 003), Assert departure and return dates can be inputted (004, 005), Select Round Trip (006),
 ####    select more than 1 adult and more than 1 child travelers (007, 008)
     @pytest.mark.run(order=1) 
-    def test_assert_return_trip_input(self):
+    def test_round_trip_adult_children(self):
         self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
         driver = self.driver
         skip = Skiplagged(driver)
+        base = BasePage(driver)
+        direct = '//skiplagged_input_values'
         skip.navigate_to_skiplagged()
         skip.select_round_one_way_trip('Round Trip')
-        skip.select_number_of_travelers('2', '2')
+        skip.select_number_of_travelers(base.get_from_json("number of adults", direct), base.get_from_json("number of children", direct))
         skip.input_departure_airport('DTW')
         skip.input_destination_airport('MIA')
-        skip.input_departure_date('MAY', '22')
-        skip.input_return_date('june', '1')
-        skip.search_flights()
+        skip.input_departure_date(base.get_from_json("departure month", direct), base.get_from_json("departure date", direct))
+        skip.input_return_date(base.get_from_json("return month", direct), base.get_from_json("return date", direct))
+        skip.click_search_flights
 
 #### TEST ID: AIR.SKP.009, AIR.SKP.010
 #### TEST DESCRIPTION: Select One Way trip (009), Search for a flight (010)    
-    def test_assert_one_way_trip_input(self):
+    def test_one_way_trip_adult_children(self):
         self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
         driver = self.driver
         skip = Skiplagged(driver)
+        base = BasePage(driver)
+        direct = '//skiplagged_input_values'
         skip.navigate_to_skiplagged()
         skip.select_round_one_way_trip('One Way')
+        skip.select_number_of_travelers(base.get_from_json("number of adults", direct), base.get_from_json("number of children", direct))
         skip.input_departure_airport('MCO')
         skip.input_destination_airport('DTW')
-        skip.input_departure_date('MAY', '22')
-        skip.search_flights()
+        skip.input_departure_date(base.get_from_json("departure month", direct), base.get_from_json("departure date", direct))
+        skip.click_search_flights
 
 #### TEST ID: AIR.SKP.011, AIR.SKP.012, AIR.SKP.013
 #### TEST DESCRIPTION: Assert header titles that precede the deals (011), Assert all the 12 deals on the home page are skiplagged rates (012),
@@ -124,3 +130,36 @@ class TestSkiplagged(unittest.TestCase):
         skip.navigate_to_skiplagged()
         skip.assert_instagram_link()
         skip.navigate_to_skiplagged()
+
+#### assert page of departure flights, check if a departure flight can be selected
+#### assert page of return flights, check if return flight can be selected
+#### confrim information on Book Now module; date, duration, number of spots, number of traveleres, price
+#### switch tabs
+#### confirm
+    def test_end_to_end_round_trip(self):
+        self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
+        driver = self.driver
+        skip = Skiplagged(driver)
+        base = BasePage(driver)
+        get_from_directory = '//skiplagged_input_values'
+        write_to_directory = '//skiplagged_values'
+        skip.navigate_to_skiplagged()
+        skip.select_round_one_way_trip('Round Trip')
+        skip.select_number_of_travelers(base.get_from_json("number of adults", get_from_directory), base.get_from_json("number of children", get_from_directory))
+        skip.input_departure_airport('HNL')
+        skip.input_destination_airport('AMS')
+        skip.input_departure_date(base.get_from_json("departure month", get_from_directory), base.get_from_json("departure date", get_from_directory))
+        skip.input_return_date(base.get_from_json("return month", get_from_directory), base.get_from_json("return date", get_from_directory))
+        skip.click_search_flights()
+        # assert departure flights page
+        # select departure flight
+        skip.select_filter_type_of_flight(type="Hidden", only="Yes")
+        skip.collect_flight_info('1', write_to_directory)
+        # skip.select_flight_index('1')
+        # assert information is correct after selection
+        # select return flight
+        # assert information is correct on module
+        # book now, switch tabs, wait
+        # confirm flight information again
+        # assert/input traveler infomration and contact details
+        # assert payment box information

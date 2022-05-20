@@ -50,6 +50,19 @@ class BasePage():
         element.click()
         time.sleep(1)
 
+    def hover_over_element(self, xpath):
+        hover_element = self.driver.find_element(By.XPATH, xpath)
+        hover = ActionChains(self.driver)
+        hover.move_to_element(hover_element)
+        hover.perform()
+
+    def hover_and_click_element(self, hover_xpath, click_xpath):
+        hover_element = self.driver.find_element(By.XPATH, hover_xpath)
+        hover = ActionChains(self.driver)
+        hover.move_to_element(hover_element)
+        hover.perform()
+        self.find_element_by_xpath(click_xpath).click()
+
     def send_text(self, xpath, text):
         element = self.driver.find_element(By.XPATH, xpath)
         self.highlight_element(xpath)
@@ -134,6 +147,14 @@ class BasePage():
         xpath = '//font[text()="%s"]' % text
         return xpath
 
+    def button_with_text(self, text):
+        xpath = '//button[text()="%s"]' % text
+        return xpath
+
+    def button_with_text_index(self, text, index):
+        xpath = '(//button[text()="%s"])[%s]' % (text, index)
+        return xpath
+
     def header_with_text(self, header_number, text):
         xpath = '//h%s[text()="%s"]' % (header_number, text)
         return xpath
@@ -205,7 +226,25 @@ class BasePage():
         with open(os.getcwd() + '//project_automate//values%s.json' % directory, "w") as json_file:
             json.dump({}, json_file, indent=4, sort_keys=True)
 
-    def get_from_json(self, json_key1, json_key2, json_key3, directory):
+    def get_from_json(self, json_key, directory):
+        file_location = os.getcwd() + '//project_automate//values%s.json' % directory
+        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'r') as json_file:
+            data = json_file.read()
+        d = json.loads(data)
+        json_value = d["%s" % json_key]
+        print(json_value)
+        return json_value
+
+    def get_from_json2(self, json_key1, json_key2, directory):
+        file_location = os.getcwd() + '//project_automate//values%s.json' % directory
+        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'r') as json_file:
+            data = json_file.read()
+        d = json.loads(data)
+        json_value = d["%s" % json_key1]["%s" % json_key2]
+        print(json_value)
+        return json_value
+
+    def get_from_json3(self, json_key1, json_key2, json_key3, directory):
         file_location = os.getcwd() + '//project_automate//values%s.json' % directory
         with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'r') as json_file:
             data = json_file.read()

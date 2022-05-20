@@ -34,7 +34,7 @@ class TestSkiplagged(unittest.TestCase):
         # input departure date and return date
         skip.input_departure_date('MAY', '22')
         skip.input_return_date('june', '1')
-        skip.search_flights()
+        skip.click_search_flights
         # write a list of cheap cities and their price on a list, we'll use it for later price analytics
         # then we'll go into the top x cities or the cities within a price range, and collect their info
         skip.navigate_into_filter_and_collect('2', '//skiplagged_values')
@@ -49,7 +49,7 @@ class TestSkiplagged(unittest.TestCase):
         skip.input_departure_airport('DTW')
         skip.input_departure_date('MAY', '22')
         skip.input_return_date('june', '1')
-        skip.search_flights()
+        skip.click_search_flights
         skip.navigate_into_filter_and_collect('2', '//skiplagged_values')
         self.driver.close()
         self.driver.quit()
@@ -62,7 +62,7 @@ class TestSkiplagged(unittest.TestCase):
         skip.input_departure_airport('DTW')
         skip.input_departure_date('MAY', '22')
         skip.input_return_date('june', '11')
-        skip.search_flights()
+        skip.click_search_flights
         skip.navigate_into_filter_and_collect_all('2', '//skiplagged_values')
         self.driver.close()
         self.driver.quit()
