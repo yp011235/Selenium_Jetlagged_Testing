@@ -1,8 +1,9 @@
 {
   "number of adults": "2",
   "number of children": "2",
-  "departure airport": "HNL",
-  "destination airport": "AMS",
+  "departure airport": "LAX",
+  "destination airport": "DTW",
+  "flight": "LAX to DTW",
   "departure month": "June",
   "departure date": "18",
   "return month": "July",

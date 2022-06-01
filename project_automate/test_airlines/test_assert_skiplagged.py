@@ -12,9 +12,9 @@ from functions.base_page import BasePage
 # class TestSkiplagged(unittest.TestCase):
 class TestSkiplagged():
     
-    # def tearDown(self):
-    #     driver = webdriver.Chrome
-    #     self.driver.quit()
+    def tearDown(self):
+        driver = webdriver.Chrome
+        self.driver.quit()
 
 #### TEST ID: AIR.SKP.001, AIR.SKP.002, AIR.SKP.003, AIR.SKP.004, AIR.SKP.005, AIR.SKP.006, AIR.SKP.007, AIR.SKP.008
 #### TEST DESCRIPTION: Assert you can navigate to skiplagged (001), Assert departure and destination airport
@@ -29,7 +29,7 @@ class TestSkiplagged():
         direct = '//skiplagged_input_values'
         skip.navigate_to_skiplagged()
         skip.select_round_one_way_trip('Round Trip')
-        skip.select_number_of_travelers(base.get_from_json("number of adults", direct), base.get_from_json("number of children", direct))
+        skip.select_number_of_travelers(base.get_from_json("number of adults", direct), '//skiplagged_values', base.get_from_json("number of children", direct))
         skip.input_departure_airport('DTW')
         skip.input_destination_airport('MIA')
         skip.input_departure_date(base.get_from_json("departure month", direct), base.get_from_json("departure date", direct))
@@ -46,7 +46,7 @@ class TestSkiplagged():
         direct = '//skiplagged_input_values'
         skip.navigate_to_skiplagged()
         skip.select_round_one_way_trip('One Way')
-        skip.select_number_of_travelers(base.get_from_json("number of adults", direct), base.get_from_json("number of children", direct))
+        skip.select_number_of_travelers(base.get_from_json("number of adults", direct), '//skiplagged_values', base.get_from_json("number of children", direct))
         skip.input_departure_airport('MCO')
         skip.input_destination_airport('DTW')
         skip.input_departure_date(base.get_from_json("departure month", direct), base.get_from_json("departure date", direct))
@@ -141,25 +141,41 @@ class TestSkiplagged():
         driver = self.driver
         skip = Skiplagged(driver)
         base = BasePage(driver)
-        get_from_directory = '//skiplagged_input_values'
+        our_input_values_directory = '//skiplagged_input_values'
         write_to_directory = '//skiplagged_values'
+        base.empty_json(write_to_directory)
         skip.navigate_to_skiplagged()
         skip.select_round_one_way_trip('Round Trip')
-        skip.select_number_of_travelers(base.get_from_json("number of adults", get_from_directory), base.get_from_json("number of children", get_from_directory))
-        skip.input_departure_airport('HNL')
-        skip.input_destination_airport('AMS')
-        skip.input_departure_date(base.get_from_json("departure month", get_from_directory), base.get_from_json("departure date", get_from_directory))
-        skip.input_return_date(base.get_from_json("return month", get_from_directory), base.get_from_json("return date", get_from_directory))
+        # select_number_of_travelers is buggy
+        skip.select_number_of_travelers(base.get_from_json("number of adults", our_input_values_directory), directory = write_to_directory, children = base.get_from_json("number of children", our_input_values_directory))
+        skip.input_departure_airport(base.get_from_json("departure airport", our_input_values_directory))
+        skip.input_destination_airport(base.get_from_json("destination airport", our_input_values_directory))
+        skip.input_departure_date(base.get_from_json("departure month", our_input_values_directory), base.get_from_json("departure date", our_input_values_directory))
+        skip.input_return_date(base.get_from_json("return month", our_input_values_directory), base.get_from_json("return date", our_input_values_directory))
         skip.click_search_flights()
         # assert departure flights page
         # select departure flight
-        skip.select_filter_type_of_flight(type="Hidden", only="Yes")
-        skip.collect_flight_info('1', write_to_directory)
-        # skip.select_flight_index('1')
+        skip.select_filter_type_of_flight(type="Standard", only="Yes")
+        skip.collect_flight_info('5', write_to_directory)
+        skip.select_flight_index('5')
         # assert information is correct after selection
+        skip.assert_selected_departure_flight(base.get_from_json("flight", our_input_values_directory), write_to_directory)
         # select return flight
+        skip.collect_flight_info('5', write_to_directory)
+        skip.select_flight_index('5')
         # assert information is correct on module
+        # skip.assert_departure_module(base.get_from_json("flight", our_input_values_directory), write_to_directory, our_input_values_directory)
         # book now, switch tabs, wait
         # confirm flight information again
         # assert/input traveler infomration and contact details
         # assert payment box information
+
+    def test_test(self):
+        self.driver = webdriver.Chrome("/Users/yeti/Desktop/Selenium Testing/chromedriver")
+        driver = self.driver
+        skip = Skiplagged(driver)
+        base = BasePage(driver)
+        our_input_values_directory = '//skiplagged_input_values'
+        write_to_directory = '//skiplagged_values'
+        driver.get('https://skiplagged.com/flights/LAX/DTW/2022-06-18/2022-07-28?adults=2&children=2#trip=NK1720-NK1188,NK417-NK339')
+        # skip.assert_departure_module(base.get_from_json("flight", our_input_values_directory), write_to_directory, our_input_values_directory)

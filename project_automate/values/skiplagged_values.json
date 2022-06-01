@@ -1,86 +1,39 @@
 {
-  "DTW to ATL": {
-    "flight 1": {
-      "price": "$131",
-      "duration": "2h",
-      "number of stops": "non stop"
-    },
-    "flight 2": {
-      "price": "$132",
-      "duration": "2h",
-      "number of stops": "non stop"
-    },
-    "flight 3": {
-      "price": "$178",
-      "duration": "2h",
-      "number of stops": "non stop"
-    },
-    "flight 4": {
-      "price": "$215",
-      "duration": "2h",
-      "number of stops": "non stop"
-    },
-    "flight 5": {
-      "price": "$223",
-      "duration": "4h",
-      "number of stops": "1 stop"
-    },
-    "flight 6": {
-      "price": "$223",
-      "duration": "5h",
-      "number of stops": "1 stop"
-    },
-    "flight 7": {
-      "price": "$223",
-      "duration": "7h",
-      "number of stops": "1 stop"
-    },
-    "flight 8": {
-      "price": "$228",
-      "duration": "2h",
-      "number of stops": "non stop"
-    },
-    "flight 9": {
-      "price": "$241",
-      "duration": "4h",
-      "number of stops": "1 stop"
-    },
-    "flight 10": {
-      "price": "$379",
-      "duration": "9h",
-      "number of stops": "2 stops"
-    }
+  "total travelers": 4,
+  "LAX to DTW": {
+    "price": "$2,269",
+    "duration": "7h",
+    "number of stops": "1 stop",
+    "departure airport": "LAX",
+    "departure city": "Los Angeles",
+    "departure takeoff time": "2:03PM",
+    "departure flight duration": " 1h 18m",
+    "layover 1 arrival": "3:21PM",
+    "layover 1 airport": "LAS",
+    "layover 1 city": "Las Vegas",
+    "layover 1 duration": " 1h 33m",
+    "layover 1 departure takeoff": "4:54PM",
+    "layover 1 flight duration": " 4h 5m",
+    "destination arrival": "11:59PM",
+    "destination airport": "DTW",
+    "destination city": "Detroit"
   },
-  "DTW to MIA": {
-    "price": "$800",
-    "duration": "3h",
-    "number of stops": "non stop",
+  "DTW to LAX": {
+    "price": "$2,392",
+    "duration": "12h",
+    "number of stops": "1 stop",
     "departure airport": "DTW",
     "departure city": "Detroit",
-    "departure takeoff time": "8:46PM",
-    "departure flight duration": " 3h 13m"
-  },
-  "HNL to AMS": {
-    "price": "$9,905",
-    "duration": "25h",
-    "number of stops": "1 stop",
-    "departure airport": "HNL",
-    "departure city": "Honolulu",
-    "departure takeoff time": "9:15PM",
-    "departure flight duration": " 5h 3m",
-    "layover 1 arrival": "5:18AM",
-    "layover 1 airport": "SFO",
-    "layover 1 city": "San Francisco",
-    "layover 1 duration": " 9h 27m",
-    "layover 1 departure takeoff": "2:45PM",
-    "destination arrival": "10:20AM",
-    "destination airport": "AMS",
-    "destination city": "Amsterdam",
-    "skipped layover duration": " 1h 10m",
-    "skipped layover takeoff": "11:30AM",
-    "skipped layover flight duration": " 3h 20m",
-    "skipped arrival": "3:50PM",
-    "skipped arrival airport": "IST",
-    "skipped arrival city": "Istanbul"
+    "departure takeoff time": "6:10AM",
+    "departure flight duration": " 3h 7m",
+    "layover 1 arrival": "9:17AM",
+    "layover 1 airport": "FLL",
+    "layover 1 city": "Fort Lauderdale",
+    "layover 1 duration": " 3h 36m",
+    "layover 1 departure takeoff": "12:53PM",
+    "layover 1 flight duration": " 5h 36m",
+    "destination arrival": "3:29PM",
+    "destination airport": "LAX",
+    "destination city": "Los Angeles"
   }
 }

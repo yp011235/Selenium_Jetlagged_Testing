@@ -30,7 +30,7 @@ class Skiplagged(BasePage):
 
 #### click the dropdown for selecting the number of travelers, click the + or - button
 #### as many times as needed to get to the right number of adults and/or children
-    def select_number_of_travelers(self, adults, children=None):
+    def select_number_of_travelers(self, adults, directory, children=None):
         self.assert_element_is_displayed(sl.SKIPLAGGED_TRAVELERS_OPTION)
         self.click_element(sl.SKIPLAGGED_TRAVELERS_OPTION)
         self.wait_until_element_is_present(sl.SKIPLAGGED_ADULTS_TRAVELLERS)
@@ -55,7 +55,12 @@ class Skiplagged(BasePage):
                 if int(children) < int(num_of_children):
                     self.click_element(sl.SKIPLAGGED_CHILDREN_MINUS)
                     time.sleep(0.5)
-                num_of_children = self.get_text(sl.SKIPLAGGED_CHILDREN_COUNT)
+                if self.check_if_element_exists(sl.SKIPLAGGED_CHILDREN_COUNT):
+                    num_of_children = self.get_text(sl.SKIPLAGGED_CHILDREN_COUNT)
+                else:
+                    self.click_element(sl.SKIPLAGGED_TRAVELERS_OPTION)
+                    self.wait_until_element_is_present(sl.SKIPLAGGED_CHILDREN_COUNT)
+                    num_of_children = self.get_text(sl.SKIPLAGGED_CHILDREN_COUNT)
 
         if children == None:
             children = 0
@@ -63,6 +68,7 @@ class Skiplagged(BasePage):
         self.click_element(sl.SKIPLAGGED_TRAVELERS_OPTION)
         total_travelers = int(adults) + int(children)
         self.assert_element_is_displayed(sl.SKIPLAGGED_TOTAL_NUMBER_OF_TRAVLERS % total_travelers)
+        self.write_to_dictionary('total travelers', total_travelers, directory)
 
     def input_departure_airport(self, airport):
         self.send_text_enter(sl.SKIPLAGGED_DEPARTURE_AIRPORT_INPUT, airport)
@@ -70,6 +76,8 @@ class Skiplagged(BasePage):
         self.assert_element_is_displayed(sl.SKIPLAGGED_DEPARTURE_AIRPORT_INPUT + '[@value="%s"]' % airport)
 
     def input_destination_airport(self, airport):
+        self.click_element(sl.SKIPLAGGED_DESTINATION_AIRPORT_INPUT)
+        time.sleep(0.5)
         self.send_text_enter(sl.SKIPLAGGED_DESTINATION_AIRPORT_INPUT, airport)
         time.sleep(1)
         self.assert_element_is_displayed(sl.SKIPLAGGED_DESTINATION_AIRPORT_INPUT + '[@value="%s"]' % airport)
@@ -428,30 +436,14 @@ class Skiplagged(BasePage):
         self.assert_element_is_displayed(self.header_with_text('2', 'skiplagged'))
         self.close_current_tab()
 
-    def write_flight_info_to_json(self, directory, index, json_key1, json_key2):
-        flight_box_xpath = sl.SKIPLAGGED_LIST_OF_FLIGHT_ROW_INDEX % index
-        from_airline = self.get_attribute(flight_box_xpath, 'value')
-        to_airline = self.get_attribute(sl.SKIPLAGGED_TO_AIRPORT, 'value')
-        json_key = from_airline + ' to ' + to_airline
-        self.add_new_dictionary(json_key, directory)       
-        time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, sl.SKIPLAGGED_FLIGHT_PRICE_ATTRIBUTE_INDEX % 1)))
-        flights = self.find_elements_by_xpath(sl.SKIPLAGGED_LIST_OF_FLIGHT_ROW)
-        values = {}
-        # the [:-1] is to stop the loop 1 before the end of the len of flights, otherwise we'd reach an Element Not Found error
-        price = self.get_text(sl.SKIPLAGGED_FLIGHT_PRICE_ATTRIBUTE_INDEX % index)
-        duration = self.get_text(sl.SKIPLAGGED_FLIGHT_DURATION_INDEX % index)
-        num_of_stops = self.get_text(sl.SKIPLAGGED_FLIGHT_NUMBER_OF_STOP_INDEX % index)
-        json_key2 = "flight " + str(index) 
-        values.update({json_key2 : {"price": str(price), "duration" : duration, "number of stops" : num_of_stops}})
-        self.write_to_dictionary(json_key, values, directory)
-
-
 #### select a flight by its position on the list
     def select_flight_index(self, index):
-        self.click_element(self.button_with_text_index('Select', index))
+        self.hover_over_element(sl.SKIPLAGGED_INDEX_FLIGHT % index)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_INDEX_FLIGHT % index + self.button_with_text('Select'))
+        self.click_element(sl.SKIPLAGGED_INDEX_FLIGHT % index)
         
-
+    
+#### write departure arrival times, airports, price, duration, layovers, etc. to json
     def collect_flight_info(self, index, directory):
         # collect departure flight info
         # collect layover flight info if any
@@ -460,14 +452,13 @@ class Skiplagged(BasePage):
         #   collect skipped layover flight info if any
         #   collect skipped destination flight info
         self.wait_until_element_is_present(sl.SKIPLAGGED_INDEX_FLIGHT_FIRST_AIRPORT % index)
-        from_airline = self.get_text(sl.SKIPLAGGED_INDEX_FLIGHT_FIRST_AIRPORT % index)
-        to_airline = self.get_text(sl.SKIPLAGGED_INDEX_FLIGHT_LAST_AIRPORT % index)
-        json_key = from_airline + ' to ' + to_airline
+        departure_airport = self.get_text(sl.SKIPLAGGED_INDEX_FLIGHT_FIRST_AIRPORT % index)
+        destination_airport = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_LAST_AIRPORT % index, "textContent")
+        json_key = departure_airport + ' to ' + destination_airport
         values = {}
         price = self.get_text(sl.SKIPLAGGED_FLIGHT_PRICE_ATTRIBUTE_INDEX % index)
         total_duration = self.get_text(sl.SKIPLAGGED_FLIGHT_DURATION_INDEX % index)
         num_of_stops = self.get_text(sl.SKIPLAGGED_FLIGHT_NUMBER_OF_STOP_INDEX % index)
-        departure_airport = from_airline
         departure_city = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_FIRST_CITY % index, "textContent")
         departure_takeoff_time = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_FIRST_DEPART_TAKEOFF % index, "textContent")
         departure_flight_duration = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_FIRST_DURATION % index, "textContent")
@@ -488,11 +479,16 @@ class Skiplagged(BasePage):
                 layover_city = self.get_attribute('('+sl.SKIPLAGGED_INDEX_FLIGHT_LAYOVER_CITY % index + ')[%s]' % layover_index, "textContent")
                 layover_duration = self.get_attribute('('+sl.SKIPLAGGED_INDEX_FLIGHT_LAYOVER_DURATION % index + ')[%s]' % layover_index, "textContent")
                 layover_departure_takeoff = self.get_attribute('('+sl.SKIPLAGGED_INDEX_FLIGHT_LAYOVER_DEPART_TAKEOFF % index + ')[%s]' % layover_index, "textContent")
-                values.update({ "layover %s arrival" % index: layover_arrival,
-                                "layover %s airport" % index: layover_airport,
-                                "layover %s city" % index: layover_city,
-                                "layover %s duration" % index: layover_duration,
-                                "layover %s departure takeoff" % index: layover_departure_takeoff})
+                duration_index = layover_index + 1
+                layover_flight_duration = self.get_attribute('('+sl.SKIPLAGGED_INDEX_FLIGHT_LAYOVER_FLIGHT_DURATION % index + ')[%s]' % duration_index, "textContent")
+
+                values.update({ "layover %s arrival" % layover_index: layover_arrival,
+                                "layover %s airport" % layover_index: layover_airport,
+                                "layover %s city" % layover_index: layover_city,
+                                "layover %s duration" % layover_index: layover_duration,
+                                "layover %s departure takeoff" % layover_index: layover_departure_takeoff,
+                                "layover %s flight duration" % layover_index: layover_flight_duration})
+
         destination_arrival = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_LAST_ARRIVAL % index, "textContent")
         destination_airport = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_LAST_AIRPORT % index, "textContent")
         destination_city = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_LAST_CITY % index, "textContent")
@@ -500,13 +496,17 @@ class Skiplagged(BasePage):
                         "destination airport": destination_airport,
                         "destination city": destination_city})
         if self.check_if_element_exists(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_LAYOVER_DURATION % index):
+            skip_layover_airport = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_LAYOVER_AIRPORT % index, "textContent")
+            skip_layover_city = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_LAYOVER_CITY % index, "textContent")
             skip_layover_duration = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_LAYOVER_DURATION % index, "textContent")
             skip_layover_takeoff = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_LAYOVER_DEPART_TAKEOFF % index, "textContent")
             skip_layover_flight_duration = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_LAYOVER_FLIGHT_DURATION % index, "textContent")
             skip_arrival = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_ARRIVAL % index, "textContent")
             skip_arrival_airport = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_ARRIVAL_AIRPORT % index, "textContent")
             skip_arrival_city = self.get_attribute(sl.SKIPLAGGED_INDEX_FLIGHT_SKIP_ARRIVAL_CITY % index, "textContent")
-            values.update({ "skipped layover duration": skip_layover_duration,
+            values.update({ "skipped layover airport": skip_layover_airport,
+                            "skipped layover city": skip_layover_city,
+                            "skipped layover duration": skip_layover_duration,
                             "skipped layover takeoff": skip_layover_takeoff,
                             "skipped layover flight duration": skip_layover_flight_duration,
                             "skipped arrival": skip_arrival,
@@ -514,6 +514,7 @@ class Skiplagged(BasePage):
                             "skipped arrival city": skip_arrival_city})
         self.write_to_dictionary(json_key, values, directory)
 
+#### select filter for Hidden or Standard type of flights 
     def select_filter_type_of_flight(self, type, only=None):
         self.wait_until_element_is_present('//div[@class="trip-depart-header"][text()="Please select your departing flight"]')
         if self.check_if_element_exists(sl.SKIPLAGGED_FLIGHT_TYPE_HIDDEN_ONLY):
@@ -528,36 +529,143 @@ class Skiplagged(BasePage):
                 else:
                     self.click_element(sl.SKIPLAGGED_FLIGHT_TYPE_STANDARD)
 
-# structure
-{
-    "from mco to hnl":{
-        "price": "",
-        "duration": "",
-        "number of stops": "",
-        "departure airport" : "",
-        "departure city": "",
-        "departure takeoff time": "",
-        "departure flight duration": "",
-        "layover 1 airport": "",
-        "layover 1 city": "",
-        "layover 1 duration": "",
-        "layover 1 takeoff time": "",
-        "layover 1 flight duration": "",
-        "layover n airport": "",
-        "layover n city": "",
-        "layover n duration": "",
-        "layover n takeoff time": "",
-        "layover n flight duration": "",
-        "destination airport": "",
-        "destination city": "",
-        "destination arrival time": "",
-        "skip layover n airport": "",
-        "skip layover n city": "",
-        "skip layover n duration": "",
-        "skip layover n takeoff time": "",
-        "skip layover n flight duration": "",
-        "skip destination airport": "",
-        "skip destination city": "",
-        "skip destination arrival time": ""
-    }
-}
+#### after selecting a departure flight, assert the same departure info appears in the departure box
+    def assert_selected_departure_flight(self, json_key, directory):
+        values = self.get_from_json(json_key, directory)
+
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_TOTAL_TIME + '[text()="%s"]' % values["duration"])
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_NUMBER_OF_STOPS + '[text()="%s"]' % values["number of stops"])
+        
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_FIRST_DEPART_TAKEOFF + '[text()="%s"]' % values["departure takeoff time"])
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_FIRST_AIRPORT + '[text()="%s"]' % values["departure airport"])
+#### assert elements that are visible before hovering airport codes
+
+        if "layover 1 airport" in values:
+        # if self.check_if_element_exists(sl.SKIPLAGGED_DEPART_LAYOVER_AIRPORT):
+            layovers = self.find_elements_by_xpath(sl.SKIPLAGGED_DEPART_LAYOVER_AIRPORT)
+            for layover_index, layover in enumerate(layovers, start=1):
+                if "layover %s airport" % layover_index in values:
+                    self.assert_element_is_displayed('('+sl.SKIPLAGGED_DEPART_LAYOVER_AIRPORT + ')[%s]' % layover_index + '[text()="%s"]' % (values["layover %s airport" % layover_index]))
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_LAST_ARRIVAL + '[text()="%s"]' % values["destination arrival"])
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_LAST_AIRPORT + '[text()="%s"]' % values["destination airport"])
+
+        if "skipped layover airport" in values:
+        # if self.check_if_element_exists(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_AIRPORT):
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_AIRPORT + '[text()="%s"]' % values["skipped layover airport"])
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_ARRIVAL_AIRPORT + '[text()="%s"]' % values["skipped arrival airport"])
+
+        self.hover_over_element(sl.SKIPLAGGED_DEPARTURE_FLIGHT_BOX)
+
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_FIRST_CITY + '[text()="%s"]' % values["departure city"])
+        self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_FIRST_DURATION + '[text()="%s"]' % values["departure flight duration"])
+
+        if "layover 1 arrival" in values:
+        # if self.check_if_element_exists(sl.SKIPLAGGED_DEPART_LAYOVER_AIRPORT):
+            layovers = self.find_elements_by_xpath(sl.SKIPLAGGED_DEPART_LAYOVER_AIRPORT)
+            for layover_index, layover in enumerate(layovers, start=1):
+                if "layover %s arrival" % layover_index in values:
+                    self.assert_element_is_displayed('('+sl.SKIPLAGGED_DEPART_LAYOVER_ARRIVAL + ')[%s]' % layover_index + '[text()="%s"]' % (values["layover %s arrival" % layover_index]))
+                    self.assert_element_is_displayed('('+sl.SKIPLAGGED_DEPART_LAYOVER_CITY + ')[%s]' % layover_index + '[text()="%s"]' % (values["layover %s city" % layover_index]))
+                    self.assert_element_is_displayed('('+sl.SKIPLAGGED_DEPART_LAYOVER_DURATION + ')[%s]' % layover_index + '[text()="%s"]' % (values["layover %s duration" % layover_index]))
+                    self.assert_element_is_displayed('('+sl.SKIPLAGGED_DEPART_LAYOVER_DEPART_TAKEOFF + ')[%s]' % layover_index + '[text()="%s"]' % (values["layover %s departure takeoff" % layover_index]))
+                    duration_index = layover_index + 1
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_DEPART_LAYOVER_FLIGHT_DURATION + ')[%s]' % duration_index + '[text()="%s"]' % (values["layover %s flight duration" % layover_index]))
+
+        if "skipped layover city" in values:
+        # if self.check_if_element_exists(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_DURATION):
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_CITY + '[text()="%s"]' % values["skipped layover city"])
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_DURATION + '[text()="%s"]' % values["skipped layover duration"])
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_DEPART_TAKEOFF + '[text()="%s"]' % values["skipped layover takeoff"])
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_LAYOVER_FLIGHT_DURATION + '[text()="%s"]' % values["skipped layover flight duration"])
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_ARRIVAL + '[text()="%s"]' % values["skipped arrival"])
+            self.assert_element_is_displayed(sl.SKIPLAGGED_DEPART_SKIP_ARRIVAL_CITY + '[text()="%s"]' % values["skipped arrival city"])
+
+    def assert_departure_module(self, departure_json_key, directory, input_directory):
+        depart_values = self.get_from_json(departure_json_key, directory)
+        departure_airport = depart_values["departure city"]
+        destination_airport = depart_values["destination city"]
+        depart_to_dest = departure_airport + " - " + destination_airport
+        depart_title_xpath = sl.SKIPLAGGED_MODULE_DEPART_GENERAL_INFO + self.span_with_text(depart_to_dest)
+        self.wait_until_element_is_present(sl.SKIPLAGGED_ITINERARY_MODULE)
+        self.wait_until_element_is_present(depart_title_xpath)
+        self.assert_element_is_displayed(depart_title_xpath)
+
+        input_values = self.get_from_json_all(input_directory)
+        self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_DEPART_GENERAL_INFO + self.span_containing_text(input_values["departure month"]))
+        self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_DEPART_GENERAL_INFO + self.span_containing_text(input_values["departure date"]))
+
+        self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_DEPART_GENERAL_INFO + self.span_with_text(depart_values["number of stops"]))
+        if "skipped layover city" in depart_values:
+            self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_DEPART_GENERAL_INFO + self.span_with_text("Hidden-City"))
+        number_of_travelers = str(int(input_values["number of adults"]) + int(input_values["number of children"]))
+        if number_of_travelers == "1":
+            travelers = "1 Traveler"
+        else:
+            travelers = "%s Travelers" % number_of_travelers
+        self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_DEPART_GENERAL_INFO + self.span_with_text(travelers))
+
+        if self.check_if_element_exists(sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX):
+            flights = self.find_elements_by_xpath(sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX)
+            for index, flight in enumerate(flights, start=1):
+                if index == 1:
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["departure takeoff time"]).replace("M", "")))
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["departure airport"])))
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s arrival" % index]).replace("M", "")))
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s airport" % index])))
+                    flight = depart_values["departure city"] + ' to ' + depart_values["layover %s city" % index]
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(flight))
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["departure flight duration"]).replace(" ", "")))
+                    if "skipped layover city" in depart_values:
+                        self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text("Backpack only"))
+
+                    layover = str(depart_values["layover %s duration" % index]).replace(" ", "") + ' Layover in ' + depart_values["layover %s city" % index] + ' (' + depart_values["layover %s airport" % index] + ')'
+                    self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAYOVER_BAR + ')[%s]' % index + self.span_with_text(layover))
+
+        #         elif len(flights) > 1 and index > 1:
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s departure takeoff" % str(index - 1)]).replace("M", "")))
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s airport" % str(index - 1)])))
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s arrival" % index]).replace("M", "")))
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s airport" % index])))
+        #             flight = depart_values["layover %s city" % str(index - 1)] + ' to ' + depart_values["layover %s city" % index]
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(flight))
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s flight duration" % index]).replace(" ", "")))
+        #             if "skipped layover city" in depart_values:
+        #                 self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text("Backpack only"))
+
+        #             layover = str(depart_values["layover %s duration" % index]).replace(" ", "") + ' Layover in ' + depart_values["layover %s city" % index] + '(' + depart_values["layover %s airport" % index] + ')'
+        #             self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAYOVER_BAR + ')[%s]' % index + self.span_with_text(layover))
+
+
+        #     last_layover = len(flights)
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s departure takeoff" % last_layover]).replace("M", "")))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s airport" % last_layover])))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["destination arrival"]).replace("M", "")))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["destination airport"])))
+        #     flight = depart_values["layover %s city" % last_layover] + ' to ' + depart_values["destination city"]
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(flight))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["layover %s flight duration" % last_layover]).replace(" ", "")))
+        #     if "skipped layover city" in depart_values:
+        #         self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text("Backpack only"))
+
+        # else:
+        #     self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text(str(depart_values["departure takeoff time"]).replace("M", "")))
+        #     self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text(str(depart_values["departure airport"])))
+        #     self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text(str(depart_values["destination arrival"]).replace("M", "")))
+        #     self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text(str(depart_values["destination airport"])))
+        #     flight = depart_values["departure city"] + ' to ' + depart_values["destination city"]
+        #     self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text(flight))
+        #     self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text(str(depart_values["departure flight duration"]).replace(" ", "")))
+        #     if "skipped layover city" in depart_values:
+        #         self.assert_element_is_displayed(sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + self.span_with_text("Backpack only"))
+
+        # if "skipped layover city" in depart_values:
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["skipped layover takeoff time"]).replace("M", "")))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["skipped layover airport"])))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["skipped arrival"]).replace("M", "")))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["skipped arrival airport"])))
+        #     flight = depart_values["skipped layover airport"] + ' to ' + depart_values["skipped arrival city"]
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(flight))
+        #     self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_LAST_FLIGHT_INFO_BOX + ')[%s]' % index + self.span_with_text(str(depart_values["skipped layover flight duration"]).replace(" ", "")))
+
+        # # self.assert_element_is_displayed('(' + sl.SKIPLAGGED_MODULE_BOOK_FLIGHT + ')[1]' + self.button_with_text("Book Departing for %s" % depart_values["price"]))
+

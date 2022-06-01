@@ -131,6 +131,10 @@ class BasePage():
         xpath = '//span[text()="%s"]' % text
         return xpath
 
+    def span_containing_text(self, text):
+        xpath = '//span[contains(text(), "%s")]' % text
+        return xpath
+
     def div_with_text(self, text):
         xpath = '//div[text()="%s"]' % text
         return xpath
@@ -232,6 +236,14 @@ class BasePage():
             data = json_file.read()
         d = json.loads(data)
         json_value = d["%s" % json_key]
+        print(json_value)
+        return json_value
+
+    def get_from_json_all(self, directory):
+        file_location = os.getcwd() + '//project_automate//values%s.json' % directory
+        with open(os.getcwd() + '//project_automate//values%s.json' % directory, 'r') as json_file:
+            data = json_file.read()
+        json_value = json.loads(data)
         print(json_value)
         return json_value
 
